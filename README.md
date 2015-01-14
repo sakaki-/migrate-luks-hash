@@ -1,12 +1,12 @@
 # migrate-luks-hash
 
-Tools to migrate a LUKS partition (created using the Whirlpool hash under `libgcrypt` < 1.6) to a different hash.
+Tools to migrate a LUKS partition (created using the Whirlpool hash under `libgcrypt` < 1.6) to a different hash, per [this guide](https://wiki.gentoo.org/index.php?title=Sakaki%27s_EFI_Install_Guide/Migrating_from_Whirlpool_Hash_on_LUKS).
 
 ## Description
 
 There is a [bug](https://bugs.archlinux.org/task/38550) in the implementation of the Whirlpool hash algorithm in versions < 1.6 of the `libgcrypt` library, as a result of which LUKS partitions created using it cannot be opened if the user subsequently migrates to version >= 1.6 (which has the correct implementation).
 
-Accordingly, users who are affected by this will likely wish to migrate the hash function used in the LUKS header, using the `cryptsetup-reencrypt` command, as described [here](http://www.saout.de/pipermail/dm-crypt/2014-February/003956.html).
+Accordingly, users who are affected by this will likely wish to migrate the hash function used in the LUKS header, using the `cryptsetup-reencrypt` command, as described [here](http://www.saout.de/pipermail/dm-crypt/2014-February/003956.html) and [here](https://wiki.gentoo.org/index.php?title=Sakaki%27s_EFI_Install_Guide/Migrating_from_Whirlpool_Hash_on_LUKS).
 
 However, performing this migration requires that the LUKS partition in question be closed; so, if the system root is on there, then a temporary boot disk (with the appropriate <1.6 version of `libcrypt`) is needed, together with the `cryptsetup-reencrypt` utility itself.
 
